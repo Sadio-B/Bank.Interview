@@ -25,7 +25,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))
                 .ReturnsAsync((Account)null);
 
-            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros, TransactionType = TransactionType.withdrawal };
+            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
             var exception = await Assert.ThrowsExceptionAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
@@ -44,7 +44,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
                 .Setup(service => service.OverdraftRepository.GetApplicabletOverdraftByAccountIdAndDate(It.IsAny<long>(), It.IsAny<DateTime>()))
                 .ReturnsAsync(new Overdraft { Amount = 10 });
 
-            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 1000, Currency = Currency.Euros, TransactionType = TransactionType.withdrawal };
+            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 1000, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
             var exception = await Assert.ThrowsExceptionAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
@@ -69,7 +69,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
             unitOfWorkMock
                 .Setup(service => service.SaveAllAsync());
 
-            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros, TransactionType = TransactionType.withdrawal };
+            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
             var actual = await withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None);
@@ -98,7 +98,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
             unitOfWorkMock
                 .Setup(service => service.SaveAllAsync());
 
-            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros, TransactionType = TransactionType.withdrawal };
+            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
             var actual = await withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None);
