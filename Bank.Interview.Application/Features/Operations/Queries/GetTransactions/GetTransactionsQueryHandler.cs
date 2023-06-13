@@ -30,7 +30,7 @@ namespace Bank.Interview.Application.Features.Operations.Queries.GetTransactions
 
             TransactionsPaginatedDto transactionsPaginated = new ()
             {
-                Transactions = (IEnumerable<TransactionDto>)_mapper.Map<IEnumerable<Transaction>>(transactions),
+                Transactions = _mapper.Map<IEnumerable<TransactionDto>>(transactions),
                 Pagination = request.PaginationRequest.CreatePagination(transactionsCount),
             };
 

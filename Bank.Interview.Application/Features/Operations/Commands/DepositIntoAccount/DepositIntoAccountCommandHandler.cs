@@ -34,7 +34,7 @@ namespace Bank.Interview.Application.Features.Operations.Commands.DepositIntoAcc
                 Amount = request.Amount,
                 Currency = request.Currency,
                 MadeOn = DateTime.Now,
-                TransactionType = request.TransactionType,
+                TransactionType = TransactionType.Deposit,
             };
 
             account.Balance += request.Amount;

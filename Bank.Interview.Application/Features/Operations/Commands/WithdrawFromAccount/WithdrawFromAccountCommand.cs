@@ -16,7 +16,5 @@ namespace Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAc
         public long Amount { get; set; }
 
         public Currency Currency { get; set; }
-
-        public TransactionType TransactionType { get; set; }
     }
 }

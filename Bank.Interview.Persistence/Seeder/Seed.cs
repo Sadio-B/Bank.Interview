@@ -180,6 +180,20 @@ namespace Bank.Interview.Persistence.Seeder
                                 MadeOn = DateTime.Now,
                                 TransactionType = TransactionType.Deposit,
                             },
+                            new Transaction()
+                            {
+                                Amount = 3000,
+                                Currency = Currency.Euros,
+                                MadeOn = DateTime.Now,
+                                TransactionType = TransactionType.Deposit,
+                            },
+                            new Transaction()
+                            {
+                                Amount = 3000,
+                                Currency = Currency.Euros,
+                                MadeOn = DateTime.Now,
+                                TransactionType = TransactionType.withdrawal,
+                            },
                         }
                     }
                 }

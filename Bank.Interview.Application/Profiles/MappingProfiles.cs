@@ -15,11 +15,6 @@ namespace Bank.Interview.Application.Profiles
         public MappingProfiles()
         {
             CreateMap<Transaction, TransactionDto>().ReverseMap();
-            CreateMap<Pagination, TransactionsPaginatedDto>()
-                .ForMember(dest => dest.Pagination.ElementCount, opts => opts.MapFrom(src => src.ElementCount))
-                .ForMember(dest => dest.Pagination.PageIndex, opts => opts.MapFrom(src => src.PageIndex))
-                .ForMember(dest => dest.Pagination.PageCount, opts => opts.MapFrom(src => src.PageCount))
-                .ForMember(dest => dest.Pagination.PageSize, opts => opts.MapFrom(src => src.PageSize));
         }
     }
 }

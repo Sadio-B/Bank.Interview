@@ -1,5 +1,6 @@
 ﻿using Bank.Interview.Application;
 using Bank.Interview.Persistence;
+using Bank.Interview.Persistence.Seeder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -67,6 +68,7 @@ namespace Bank.Interview.Api
                 {
                     await bankContext.Database.EnsureDeletedAsync();
                     await bankContext.Database.MigrateAsync();
+                    await Seed.InitializeData(bankContext);
 
                 }
                 catch (Exception exception)

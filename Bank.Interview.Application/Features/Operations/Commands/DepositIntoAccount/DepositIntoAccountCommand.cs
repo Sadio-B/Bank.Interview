@@ -15,7 +15,5 @@ namespace Bank.Interview.Application.Features.Operations.Commands.DepositIntoAcc
         public long Amount { get; set; }
 
         public Currency  Currency { get; set; }
-
-        public TransactionType TransactionType { get; set; }
     }
 }
