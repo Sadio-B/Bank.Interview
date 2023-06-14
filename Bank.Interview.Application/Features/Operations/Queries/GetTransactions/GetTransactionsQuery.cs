@@ -14,6 +14,6 @@ namespace Bank.Interview.Application.Features.Operations.Queries.GetTransactions
     {
         public long AccountId { get; set; }
 
-        public PaginationRequest PaginationRequest { get; } = new PaginationRequest();
+        public PaginationRequest PaginationRequest { get; set; } = new PaginationRequest();
     }
 }
