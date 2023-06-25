@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bank.Interview.Application.Contrats.Common
+﻿namespace Bank.Interview.Application.Contrats.Common
 {
     public interface IGenericRepository<T> where T : class
     {
-        public Task<IEnumerable<T>> GetAllAsync(T entity);
+        public Task<IEnumerable<T>> GetAllAsync();
 
         public Task<T?> GetByIdAsync(long id);
 

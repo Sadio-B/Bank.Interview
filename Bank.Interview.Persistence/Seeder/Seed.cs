@@ -1,9 +1,4 @@
 ﻿using Bank.Interview.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bank.Interview.Persistence.Seeder
 {
@@ -11,6 +6,9 @@ namespace Bank.Interview.Persistence.Seeder
     {
         public static async Task InitializeData(BankContext bankContext)
         {
+            if (bankContext.Users.Any())
+                return;
+
             var user = CreateUser();
 
             bankContext.Users.Add(user);
@@ -20,7 +18,7 @@ namespace Bank.Interview.Persistence.Seeder
 
         private static User CreateUser()
         {
-            User user =  new()
+            User user = new()
             {
                 FirstName = "John",
                 LastName = "Doe",

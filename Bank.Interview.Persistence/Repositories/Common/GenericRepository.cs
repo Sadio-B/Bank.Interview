@@ -1,13 +1,6 @@
 ﻿using AutoMapper;
 using Bank.Interview.Application.Contrats.Common;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Bank.Interview.Persistence.Repositories.Common
 {
@@ -27,7 +20,7 @@ namespace Bank.Interview.Persistence.Repositories.Common
             return await _bankContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(T entity)
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _bankContext.Set<T>().ToListAsync();
         }

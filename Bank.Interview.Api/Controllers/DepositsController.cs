@@ -7,11 +7,11 @@ namespace Bank.Interview.Api.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    public class DepositesController : ControllerBase
+    public class DepositsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public DepositesController(IMediator mediator)
+        public DepositsController(IMediator mediator)
         {
             _mediator = mediator;
         }

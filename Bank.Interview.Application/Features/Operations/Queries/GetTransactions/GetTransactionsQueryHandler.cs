@@ -3,12 +3,6 @@ using Bank.Interview.Application.Contrats;
 using Bank.Interview.Application.Dtos;
 using Bank.Interview.Application.Extensions;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Bank.Interview.Application.Features.Operations.Queries.GetTransactions
 {
@@ -28,7 +22,7 @@ namespace Bank.Interview.Application.Features.Operations.Queries.GetTransactions
             var transactionsCount = await _unitOfWork.TransactionRepository.CountAsync();
             var transactions = await _unitOfWork.TransactionRepository.GetTransactionsPaginatedByAccountId(request.AccountId, request.PaginationRequest);
 
-            TransactionsPaginatedDto transactionsPaginated = new ()
+            TransactionsPaginatedDto transactionsPaginated = new()
             {
                 Transactions = _mapper.Map<IEnumerable<TransactionDto>>(transactions),
                 Pagination = request.PaginationRequest.CreatePagination(transactionsCount),

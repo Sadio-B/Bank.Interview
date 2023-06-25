@@ -1,12 +1,6 @@
 ﻿using Bank.Interview.Application.Contrats;
-using Bank.Interview.Application.Contrats.Repositories;
 using Bank.Interview.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bank.Interview.Application.Features.Operations.Commands.DepositIntoAccount
 {
@@ -26,7 +20,7 @@ namespace Bank.Interview.Application.Features.Operations.Commands.DepositIntoAcc
             // TODO Create  custom Exception
             if (account is null)
                 throw new Exception("Account not found");
-            
+
 
             var depositToMake = new Transaction
             {

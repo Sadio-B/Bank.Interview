@@ -1,11 +1,6 @@
 ﻿using Bank.Interview.Application.Contrats;
 using Bank.Interview.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAccount
 {
@@ -39,7 +34,7 @@ namespace Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAc
             {
                 AccountId = request.AccountId,
                 Amount = newBalance,
-                Currency  = request.Currency,
+                Currency = request.Currency,
                 MadeOn = DateTime.Now,
                 TransactionType = TransactionType.withdrawal,
             };

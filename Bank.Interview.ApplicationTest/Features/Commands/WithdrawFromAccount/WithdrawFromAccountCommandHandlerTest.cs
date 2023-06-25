@@ -3,22 +3,15 @@ using Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAccoun
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
+using Xunit;
 
 namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
 {
-    [TestClass]
     public class WithdrawFromAccountCommandHandlerTest
     {
         private readonly Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        [TestMethod]
+        [Fact]
         public async Task WithdrawFromAccount_When_Account_Does_Not_Exists_Throw()
         {
             unitOfWorkMock
@@ -28,12 +21,12 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
             var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
-            var exception = await Assert.ThrowsExceptionAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
+            var exception = await Assert.ThrowsAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
 
             exception.Message.Should().BeSameAs("Account not found");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WithdrawFromAccount_1000_When_Balance_Equal_100_And_Overdraft_Equal_100_Return_Exception()
         {
             unitOfWorkMock
@@ -47,12 +40,12 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
             var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 1000, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
 
-            var exception = await Assert.ThrowsExceptionAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
+            var exception = await Assert.ThrowsAsync<Exception>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
 
             exception.Message.Should().BeSameAs("Overdraft reached");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WithdrawFromAccount_50_When_Balance_Equal_50_And_OverDraft_Equal_0_Return_0()
         {
             unitOfWorkMock
@@ -61,7 +54,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
 
             unitOfWorkMock
                 .Setup(service => service.OverdraftRepository.GetApplicabletOverdraftByAccountIdAndDate(It.IsAny<long>(), It.IsAny<DateTime>()))
-                .ReturnsAsync((Overdraft) null);
+                .ReturnsAsync((Overdraft)null);
 
             unitOfWorkMock
                 .Setup(service => service.TransactionRepository.AddAsync(It.IsAny<Domain.Entities.Transaction>()));
@@ -81,7 +74,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
 
         }
 
-        [TestMethod]
+        [Fact]
         public async Task WithdrawFromAccount_50_When_Balance_Equal_100_And_OverDraft_Equal10_Return_50()
         {
             unitOfWorkMock

@@ -2,7 +2,6 @@
 using Bank.Interview.Application.Dtos;
 using Bank.Interview.Application.Features.Operations.Queries.GetTransactions;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bank.Interview.Api.Controllers
@@ -25,10 +24,10 @@ namespace Bank.Interview.Api.Controllers
         {
             var defaultPaginationRequest = new PaginationRequest();
 
-            var transactionsPaginated =  await _mediator.Send(new GetTransactionsQuery
+            var transactionsPaginated = await _mediator.Send(new GetTransactionsQuery
             {
                 AccountId = accountId,
-                PaginationRequest = { PageIndex =  pageIndex ?? defaultPaginationRequest.PageIndex, PageSize = pageSize ?? defaultPaginationRequest.PageSize }
+                PaginationRequest = { PageIndex = pageIndex ?? defaultPaginationRequest.PageIndex, PageSize = pageSize ?? defaultPaginationRequest.PageSize }
 
             });
 

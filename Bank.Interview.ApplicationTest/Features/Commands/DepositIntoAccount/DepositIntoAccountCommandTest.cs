@@ -1,23 +1,17 @@
 ﻿using Bank.Interview.Application.Contrats;
 using Bank.Interview.Application.Features.Operations.Commands.DepositIntoAccount;
-using Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAccount;
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
 {
-    [TestClass]
     public class DepositIntoAccountCommandTest
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-        [TestMethod]
+        [Fact]
         public async Task DepositIntoAccount_When_Account_Does_Not_Exists()
         {
             _unitOfWorkMock
@@ -27,12 +21,12 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
             var depositIntoAccountCommand = new DepositIntoAccountCommand { AccountId = 1, Amount = 50, Currency = Currency.Euros };
             var depositIntoAccountCommandHandler = new DepositIntoAccountCommandHandler(_unitOfWorkMock.Object);
 
-            var exception = await Assert.ThrowsExceptionAsync<Exception>(() => depositIntoAccountCommandHandler.Handle(depositIntoAccountCommand, CancellationToken.None));
+            var exception = await Assert.ThrowsAsync<Exception>(() => depositIntoAccountCommandHandler.Handle(depositIntoAccountCommand, CancellationToken.None));
 
             exception.Message.Should().BeSameAs("Account not found");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task DepositIntoAccount_100_When_BalanceAccount_100_Return_200()
         {
             _unitOfWorkMock

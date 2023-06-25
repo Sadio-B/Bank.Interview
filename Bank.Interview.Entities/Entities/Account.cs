@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Bank.Interview.Domain.Entities
+﻿namespace Bank.Interview.Domain.Entities
 {
-    public class Account 
+    public class Account
     {
         public long Id { get; set; }
 

@@ -7,3 +7,5 @@ var app = builder.ConfigureServices();
 await app.InitializeDatabase();
 
 app.ConfigurePipeline().Run();
+
+public partial class Program { }

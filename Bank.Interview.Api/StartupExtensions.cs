@@ -2,7 +2,6 @@
 using Bank.Interview.Persistence;
 using Bank.Interview.Persistence.Seeder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Bank.Interview.Api
 {
@@ -61,12 +60,12 @@ namespace Bank.Interview.Api
             using var scope = app.Services.CreateScope();
             var bankContext = scope.ServiceProvider.GetRequiredService<BankContext>();
             var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            var environment = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
 
-            if (bankContext is not null)
+            if (bankContext is not null && !environment.IsEnvironment("IntegrationTests"))
             {
                 try
                 {
-                    await bankContext.Database.EnsureDeletedAsync();
                     await bankContext.Database.MigrateAsync();
                     await Seed.InitializeData(bankContext);
 

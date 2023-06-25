@@ -6,15 +6,10 @@ using Bank.Interview.Application.Profiles;
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Xunit;
 
 namespace Bank.Interview.ApplicationTest.Features.Queries.GetTransactions
 {
-    [TestClass]
     public class GetTransactionsQueryHandlerTest
     {
         private readonly IMapper _mapper;
@@ -29,7 +24,7 @@ namespace Bank.Interview.ApplicationTest.Features.Queries.GetTransactions
             _mapper = mapperConfiguration.CreateMapper();
         }
 
-        [TestMethod]
+        [Fact]
         public async Task GetTransactions_When_ElementCount_Equal_20_PageSize_Equal_10_And_PageIndex_Equal_1()
         {
             var accountId = 1L;
@@ -51,13 +46,13 @@ namespace Bank.Interview.ApplicationTest.Features.Queries.GetTransactions
                     new Transaction { AccountId = 9 }, new Transaction { AccountId = 10 },
                 });
 
-            var getTransactionsQuery = new GetTransactionsQuery { AccountId = accountId, PaginationRequest = paginationRequest } ;
+            var getTransactionsQuery = new GetTransactionsQuery { AccountId = accountId, PaginationRequest = paginationRequest };
             var getTransactionsQueryHandler = new GetTransactionsQueryHandler(_unitOfWorkMock.Object, _mapper);
 
             var actual = await getTransactionsQueryHandler.Handle(getTransactionsQuery, CancellationToken.None);
 
             actual.Pagination.Should().BeEquivalentTo(new Pagination { ElementCount = 20, PageCount = 2, PageIndex = 1, PageSize = 10 });
-            actual.Transactions.Count().Should().Be(10);   
+            actual.Transactions.Count().Should().Be(10);
         }
     }
 }
