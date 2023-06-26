@@ -1,4 +1,5 @@
 ﻿using Bank.Interview.Application.Contrats;
+using Bank.Interview.Application.Exceptions;
 using Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAccount;
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
@@ -10,6 +11,18 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
     public class WithdrawFromAccountCommandHandlerTest
     {
         private readonly Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
+
+        [Fact]
+        public async Task WithdrawFromAccount_0_Throw_A_ValidationException()
+        {
+            var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 0, Currency = Currency.Euros };
+            var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
+
+            var actual = await Assert.ThrowsAnyAsync<ValidationException>(() => withdrawFromAccountCommandHandler.Handle(withdrawFromAccountCommand, CancellationToken.None));
+
+            actual.ErrorMessages.Count.Should().Be(1);
+            actual.ErrorMessages.First().Should().Be("Amount must be greater than 0");
+        }
 
         [Fact]
         public async Task WithdrawFromAccount_When_Account_Does_Not_Exists_Throw()

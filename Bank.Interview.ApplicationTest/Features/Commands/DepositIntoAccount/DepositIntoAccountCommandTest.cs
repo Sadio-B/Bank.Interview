@@ -1,4 +1,5 @@
 ﻿using Bank.Interview.Application.Contrats;
+using Bank.Interview.Application.Exceptions;
 using Bank.Interview.Application.Features.Operations.Commands.DepositIntoAccount;
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
@@ -10,6 +11,18 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
     public class DepositIntoAccountCommandTest
     {
         private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
+
+        [Fact]
+        public async Task DepositIntoAccount_0_Throw_A_ValidationException()
+        {
+            var depositIntoAccountCommand = new DepositIntoAccountCommand { AccountId = 1, Amount = 0, Currency = Currency.Euros };
+            var depositIntoAccountCommandHandler = new DepositIntoAccountCommandHandler(_unitOfWorkMock.Object);
+
+            var actual = await Assert.ThrowsAnyAsync<ValidationException>(() => depositIntoAccountCommandHandler.Handle(depositIntoAccountCommand, CancellationToken.None));
+
+            actual.ErrorMessages.Count.Should().Be(1);
+            actual.ErrorMessages.First().Should().Be("Amount must be greater than 0");
+        }
 
         [Fact]
         public async Task DepositIntoAccount_When_Account_Does_Not_Exists()
@@ -46,5 +59,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
 
             actual.Should().Be(200);
         }
+
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using Bank.Interview.Application.Contrats;
+using Bank.Interview.Application.Exceptions;
+using Bank.Interview.Application.Features.Operations.Commands.DepositIntoAccount;
 using Bank.Interview.Domain.Entities;
 using MediatR;
 
@@ -15,6 +17,8 @@ namespace Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAc
 
         public async Task<long> Handle(WithdrawFromAccountCommand request, CancellationToken cancellationToken)
         {
+            ValidateRequest(request);
+
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(request.AccountId);
 
             // TODO Create  custom Exception
@@ -46,6 +50,15 @@ namespace Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAc
             await _unitOfWork.SaveAllAsync();
 
             return account.Balance;
+        }
+
+        private static void ValidateRequest(WithdrawFromAccountCommand request)
+        {
+            var validator = new WithdrawFromAccountCommandValidator();
+            var validationResult = validator.Validate(request);
+
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult);
         }
     }
 }
