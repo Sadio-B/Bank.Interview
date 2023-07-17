@@ -13,7 +13,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
         private readonly Mock<IUnitOfWork> unitOfWorkMock = new Mock<IUnitOfWork>();
 
         [Fact]
-        public async Task WithdrawFromAccount_0_Throw_A_ValidationException()
+        public async Task WithdrawFromAccount_ShouldThrowValidationException_WhenAmountEquals0()
         {
             var withdrawFromAccountCommand = new WithdrawFromAccountCommand { AccountId = 1, Amount = 0, Currency = Currency.Euros };
             var withdrawFromAccountCommandHandler = new WithdrawFromAccountCommandHandler(unitOfWorkMock.Object);
@@ -25,7 +25,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
         }
 
         [Fact]
-        public async Task WithdrawFromAccount_When_Account_Does_Not_Exists_Throw()
+        public async Task WithdrawFromAccount_ShouldThrowException_WhenAccountDoesNotExists()
         {
             unitOfWorkMock
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))
@@ -40,7 +40,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
         }
 
         [Fact]
-        public async Task WithdrawFromAccount_1000_When_Balance_Equal_100_And_Overdraft_Equal_100_Return_Exception()
+        public async Task WithdrawFromAccount_ShouldThrowException_WhenBalanceEquals100WithdrawAmountEquals1000AndOverdraftEquals100()
         {
             unitOfWorkMock
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))
@@ -59,7 +59,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.WithdrawFromAccount
         }
 
         [Fact]
-        public async Task WithdrawFromAccount_50_When_Balance_Equal_50_And_OverDraft_Equal_0_Return_0()
+        public async Task WithdrawFromAccount_ShouldReturn0_WhenBalanceEquals50WithdrawAmountEquals50AndOverDraftEquals0()
         {
             unitOfWorkMock
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))

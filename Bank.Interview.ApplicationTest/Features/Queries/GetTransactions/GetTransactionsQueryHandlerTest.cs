@@ -25,7 +25,7 @@ namespace Bank.Interview.ApplicationTest.Features.Queries.GetTransactions
         }
 
         [Fact]
-        public async Task GetTransactions_When_ElementCount_Equal_20_PageSize_Equal_10_And_PageIndex_Equal_1()
+        public async Task GetTransactions_ShouldReturnATotalEquals10_WhenElementCountEquals20PageSizeEquals10AndPageInde_Equals1()
         {
             var accountId = 1L;
 

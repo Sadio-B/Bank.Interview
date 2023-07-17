@@ -1,4 +1,5 @@
 ﻿using Bank.Interview.ApiTest.Common;
+using Bank.Interview.Application.Features.Operations.Commands.WithdrawFromAccount;
 using Bank.Interview.Domain.Entities;
 using FluentAssertions;
 using System.Text;
@@ -26,9 +27,10 @@ namespace Bank.Interview.ApiTest.Steps.WithdrawFromAccount
         [Given(@"The following withdraw")]
         public async Task GivenTheFollowingWithdraw(Table table)
         {
-            var jsonWithdrawFromAccount = JsonSerializer.Serialize(table.CreateInstance<Transaction>());
-            var httpContent = new StringContent(jsonWithdrawFromAccount, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync("api/Withdraws/add", httpContent);
+            var withdrawFromAccountCommand = table.CreateInstance<WithdrawFromAccountCommand>();
+            var jsonWithdrawFromAccountCommand = JsonSerializer.Serialize(withdrawFromAccountCommand);
+            var httpContent = new StringContent(jsonWithdrawFromAccountCommand, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"api/Accounts/withdraw", httpContent);
             var responseString = await response.Content.ReadAsStringAsync();
 
             actual = JsonSerializer.Deserialize<long>(responseString);

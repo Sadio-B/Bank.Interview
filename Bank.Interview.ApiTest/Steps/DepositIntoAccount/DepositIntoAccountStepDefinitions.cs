@@ -28,10 +28,11 @@ namespace Bank.Interview.ApiTest.Steps.DepositIntoAccount
         [Given(@"The following deposite")]
         public async Task GivenTheAmountDepositeIs(Table table)
         {
-            var jsonDepositIntoAccountCommand = JsonSerializer.Serialize(table.CreateInstance<DepositIntoAccountCommand>());
+            var depositIntoAccountCommand = table.CreateInstance<DepositIntoAccountCommand>();
+            var jsonDepositIntoAccountCommand = JsonSerializer.Serialize(depositIntoAccountCommand);
             var httpContent = new StringContent(jsonDepositIntoAccountCommand, Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("/api/deposits/add", httpContent);
+            var response = await _client.PostAsync($"/api/Accounts/deposit", httpContent);
             var responseString = await response.Content.ReadAsStringAsync();
             actual = JsonSerializer.Deserialize<long>(responseString);
         }

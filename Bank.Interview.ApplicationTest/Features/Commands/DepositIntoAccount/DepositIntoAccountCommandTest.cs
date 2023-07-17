@@ -13,7 +13,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
         private readonly Mock<IUnitOfWork> _unitOfWorkMock = new Mock<IUnitOfWork>();
 
         [Fact]
-        public async Task DepositIntoAccount_0_Throw_A_ValidationException()
+        public async Task DepositIntoAccount_ShouldThrowValidationException_WhenAmountEqual0()
         {
             var depositIntoAccountCommand = new DepositIntoAccountCommand { AccountId = 1, Amount = 0, Currency = Currency.Euros };
             var depositIntoAccountCommandHandler = new DepositIntoAccountCommandHandler(_unitOfWorkMock.Object);
@@ -25,7 +25,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
         }
 
         [Fact]
-        public async Task DepositIntoAccount_When_Account_Does_Not_Exists()
+        public async Task DepositIntoAccount_ShouldThrowValidationException_WhenAccountDoesNotExists()
         {
             _unitOfWorkMock
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))
@@ -40,7 +40,7 @@ namespace Bank.Interview.ApplicationTest.Features.Commands.DepositIntoAccount
         }
 
         [Fact]
-        public async Task DepositIntoAccount_100_When_BalanceAccount_100_Return_200()
+        public async Task DepositIntoAccount_ShouldReturn200_WhenBalanceAccountEquals100AndAmountDepositEqals100()
         {
             _unitOfWorkMock
                 .Setup(service => service.AccountRepository.GetByIdAsync(It.IsAny<long>()))
