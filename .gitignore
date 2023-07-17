@@ -475,3 +475,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/Bank.Interview.Api/bank.db
+/Bank.Interview.Api/bank.db-shm
+/Bank.Interview.Api/bank.db-wal
